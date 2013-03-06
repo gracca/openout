@@ -34,51 +34,63 @@ class OpenOutWindow(Gtk.Window):
     def __init__(self):
         """Initialize the window"""
         Gtk.Window.__init__(self, title='OpenOut')
-        self.set_default_size(240, 350)
+        self.set_default_size(200, 250)
         self.set_position(Gtk.WindowPosition.CENTER)
         self.set_icon_name('gtk-quit')
         self.set_border_width(10)
 
-        # Vertical box container
-        self.vbox = Gtk.Box(spacing=5, homogeneous=True)
-        self.vbox.set_orientation(Gtk.Orientation.VERTICAL)
-        self.add(self.vbox)
+        # Grid container
+        self.grid = Gtk.Grid(column_homogeneous=True, row_homogeneous=True,
+                             column_spacing=3, row_spacing=3)
+        self.add(self.grid)
 
         # Button 1 for logout
         self.img1 = Gtk.Image(icon_name='gnome-logout')
         self.button1 = Gtk.Button('Logout', image=self.img1)
         self.button1.connect('clicked', self.on_button1_clicked)
-        self.vbox.pack_start(self.button1, True, True, 0)
+        self.grid.attach(self.button1, 0, 0, 2, 1)
 
         # Button 2 for suspend
         self.img2 = Gtk.Image(icon_name='gnome-session-suspend')
         self.button2 = Gtk.Button('Suspend', image=self.img2)
         self.button2.connect('clicked', self.on_button2_clicked)
-        self.vbox.pack_start(self.button2, True, True, 0)
+        self.grid.attach_next_to(self.button2, self.button1,
+                                 Gtk.PositionType.BOTTOM, 2, 1)
 
         # Button 3 for hibernate
         self.img3 = Gtk.Image(icon_name='gnome-session-hibernate')
         self.button3 = Gtk.Button('Hibernate', image=self.img3)
         self.button3.connect('clicked', self.on_button3_clicked)
-        self.vbox.pack_start(self.button3, True, True, 0)
+        self.grid.attach_next_to(self.button3, self.button2,
+                                 Gtk.PositionType.BOTTOM, 2, 1)
 
         # Button 4 for reboot
         self.img4 = Gtk.Image(icon_name='gnome-session-reboot')
         self.button4 = Gtk.Button('Reboot', image=self.img4)
         self.button4.connect('clicked', self.on_button4_clicked)
-        self.vbox.pack_start(self.button4, True, True, 0)
+        self.grid.attach_next_to(self.button4, self.button3,
+                                 Gtk.PositionType.BOTTOM, 2, 1)
 
         # Button 5 for shutdown
         self.img5 = Gtk.Image(icon_name='gnome-shutdown')
         self.button5 = Gtk.Button('Shutdown', image=self.img5)
         self.button5.connect('clicked', self.on_button5_clicked)
-        self.vbox.pack_start(self.button5, True, True, 0)
+        self.grid.attach_next_to(self.button5, self.button4,
+                                 Gtk.PositionType.BOTTOM, 2, 1)
 
         # Button 6 for cancel
         self.img6 = Gtk.Image(icon_name='process-stop')
         self.button6 = Gtk.Button('Cancel', image=self.img6)
         self.button6.connect('clicked', Gtk.main_quit)
-        self.vbox.pack_start(self.button6, True, True, 0)
+        self.grid.attach_next_to(self.button6, self.button5,
+                                 Gtk.PositionType.BOTTOM, 1, 1)
+
+        # Button 7 for about
+        self.img7 = Gtk.Image(icon_name='help-about')
+        self.button7 = Gtk.Button('About', image=self.img7)
+        self.button7.connect('clicked', self.on_button7_clicked)
+        self.grid.attach_next_to(self.button7, self.button6,
+                                 Gtk.PositionType.RIGHT, 1, 1)
 
     # Callback for logout
     def on_button1_clicked(self, widget):
@@ -121,6 +133,11 @@ class OpenOutWindow(Gtk.Window):
         """Shutdown the computer"""
         os.system('systemctl poweroff')
         sys.exit(0)
+
+    # Callback for about
+    def on_button7_clicked(self, widget):
+        """Show info message"""
+        print 'About'
 
 
 def splash():
