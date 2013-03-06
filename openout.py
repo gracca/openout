@@ -78,17 +78,17 @@ class OpenOutWindow(Gtk.Window):
         self.grid.attach_next_to(self.button5, self.button4,
                                  Gtk.PositionType.BOTTOM, 2, 1)
 
-        # Button 6 for cancel
-        self.img6 = Gtk.Image(icon_name='process-stop')
-        self.button6 = Gtk.Button('Cancel', image=self.img6)
-        self.button6.connect('clicked', Gtk.main_quit)
+        # Button 6 for about
+        self.img6 = Gtk.Image(icon_name='help-about')
+        self.button6 = Gtk.Button('About', image=self.img6)
+        self.button6.connect('clicked', self.on_button6_clicked)
         self.grid.attach_next_to(self.button6, self.button5,
                                  Gtk.PositionType.BOTTOM, 1, 1)
 
-        # Button 7 for about
-        self.img7 = Gtk.Image(icon_name='help-about')
-        self.button7 = Gtk.Button('About', image=self.img7)
-        self.button7.connect('clicked', self.on_button7_clicked)
+        # Button 7 for cancel
+        self.img7 = Gtk.Image(icon_name='process-stop')
+        self.button7 = Gtk.Button('Cancel', image=self.img7)
+        self.button7.connect('clicked', Gtk.main_quit)       
         self.grid.attach_next_to(self.button7, self.button6,
                                  Gtk.PositionType.RIGHT, 1, 1)
 
@@ -135,9 +135,17 @@ class OpenOutWindow(Gtk.Window):
         sys.exit(0)
 
     # Callback for about
-    def on_button7_clicked(self, widget):
-        """Show info message"""
-        print 'About'
+    def on_button6_clicked(self, widget):
+        """Show info message dialog"""
+        info = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+                                 Gtk.ButtonsType.OK, 'OpenOut version ' +
+                                 __version__)
+        msg = 'A simple logout menu written in Python and Gtk+ 3\n\n' + \
+              __copyright__ + '\nE-Mail: ' + __email__ + '\nLicense: ' \
+              + __license__
+        info.format_secondary_text(msg)
+        info.run()
+        info.destroy()
 
 
 def splash():
