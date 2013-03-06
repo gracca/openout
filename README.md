@@ -1,4 +1,7 @@
-**OpenOut** is a simple logout menu written in Python and Gtk+ 3.
+OpenOut
+=======
+
+A simple logout menu written in Python and Gtk+ 3.
 
 It supports the following window managers:
 
